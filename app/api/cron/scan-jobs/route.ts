@@ -22,7 +22,7 @@ async function scan(request: Request) {
   if (!calibrationId) return NextResponse.json({ error: "Choose a calibration before scanning." }, { status: 400 });
   const calibration = await supabase.from("calibrations").select("*").eq("id", calibrationId).single();
   if (calibration.error) return NextResponse.json({ error: calibration.error.message }, { status: 400 });
-  const sessionId = await createSession(supabase, "job_scan", JSON.stringify({ calibration_id: calibrationId, calibration_reused: calibrationReused }));
+  const sessionId = await createSession(supabase, "job_scan", JSON.stringify({ calibration_id: calibrationId, calibration_reused: calibrationReused }), auth.cron ? calibration.data.owner_id : undefined);
   const companies = await supabase.from("companies").select("*").not("ats_slug", "is", null).not("ats_type", "is", null);
   if (companies.error) return NextResponse.json({ error: companies.error.message }, { status: 500 });
   const costs = []; let added = 0; const zeroOpenings: string[] = [];
@@ -33,11 +33,11 @@ async function scan(request: Request) {
     const relevant = dedupePostingsByUrl(result.postings.filter((posting) => isRelevantTitle(posting.title)));
     if (!relevant.length) zeroOpenings.push(company.id);
     for (const posting of relevant) {
-      const insert = await supabase.from("jobs").upsert({ company_id: company.id, title: posting.title, url: posting.url, location: posting.location, jd_text: posting.jd_text, source: posting.source, scanned_at: new Date().toISOString(), status: "new" }, { onConflict: "owner_id,url", ignoreDuplicates: true }).select("id").maybeSingle();
+      const insert = await supabase.from("jobs").upsert({ company_id: company.id, title: posting.title, url: posting.url, location: posting.location, jd_text: posting.jd_text, source: posting.source, scanned_at: new Date().toISOString(), status: "new", ...(auth.cron ? { owner_id: company.owner_id } : {}) }, { onConflict: "owner_id,url", ignoreDuplicates: true }).select("id").maybeSingle();
       if (insert.error) continue;
       if (!insert.data) continue;
       added += 1;
-      try { const scored = await scoreJob(supabase, { title: posting.title, company: company.name, location: posting.location, jd_text: posting.jd_text }, calibration.data); costs.push(scored.cost); await supabase.from("job_scores").insert({ job_id: insert.data.id, calibration_id: calibrationId, ...scored.score, model: scored.model }); } catch { /* Persist the real posting even when scoring is unavailable. */ }
+      try { const scored = await scoreJob(supabase, { title: posting.title, company: company.name, location: posting.location, jd_text: posting.jd_text }, calibration.data); costs.push(scored.cost); await supabase.from("job_scores").insert({ job_id: insert.data.id, calibration_id: calibrationId, ...scored.score, model: scored.model, ...(auth.cron ? { owner_id: company.owner_id } : {}) }); } catch { /* Persist the real posting even when scoring is unavailable. */ }
     }
   }
   await appendSessionCosts(supabase, sessionId, costs);

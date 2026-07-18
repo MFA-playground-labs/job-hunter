@@ -161,10 +161,10 @@ export async function runLLM(options: RunLLMOptions): Promise<RunLLMResult> {
 
 type Db = SupabaseClient<Database>;
 
-export async function createSession(supabase: Db, type: SessionType, summary?: string) {
+export async function createSession(supabase: Db, type: SessionType, summary?: string, ownerId?: string) {
   const { data, error } = await supabase
     .from("sessions")
-    .insert({ type, summary: summary ?? null })
+    .insert({ type, summary: summary ?? null, ...(ownerId ? { owner_id: ownerId } : {}) })
     .select("id")
     .single();
   if (error) throw new Error(`Failed to create session: ${error.message}`);

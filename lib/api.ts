@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/is-configured";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 // Shared guard for authenticated API routes: Supabase configured + a logged-in
 // user (RLS then scopes every query to that user). Returns the client or a
@@ -49,7 +50,13 @@ export function requireCronSecret(request: Request): NextResponse | null {
 
 export async function requireUserOrCron(request: Request) {
   const cronError = requireCronSecret(request);
-  if (!cronError) return { error: null, supabase: null, user: null, cron: true } as const;
+  if (!cronError) {
+    try {
+      return { error: null, supabase: createAdminClient(), user: null, cron: true } as const;
+    } catch (error) {
+      return { error: NextResponse.json({ error: error instanceof Error ? error.message : "Cron client is unavailable" }, { status: 503 }), supabase: null, user: null, cron: true } as const;
+    }
+  }
   const userResult = await requireUser();
   if (!userResult.error) return { ...userResult, cron: false } as const;
   return { error: cronError, supabase: null, user: null, cron: false } as const;
