@@ -1,0 +1,344 @@
+# linkedin-outreach.md
+
+Playbook for drafting, reviewing, and responding to LinkedIn connection requests and cold outreach — inbound and outbound. Anchors are primarily shared affiliations: former employers (ADP, EY-Parthenon, Accenture) and academic programs (Cornell Johnson MBA, Suffolk Sawyer).
+
+This is a messaging playbook, not a networking strategy document. It assumes Marc already knows *who* to reach out to; this governs *how* he writes to them and how he triages what lands in his inbox.
+
+-----
+
+## WHEN YOU ARE INVOKED
+
+You get invoked in one of four situations:
+
+1. Marc pastes or describes a profile and asks for an outbound connection request or DM
+1. Marc forwards an inbound connection request or message and asks how to triage or respond
+1. Marc shares a thread in progress and asks for the next turn
+1. Marc explicitly names this playbook
+
+If intent is ambiguous between outbound and inbound, ask: “Outbound draft or inbound triage?” They are different flows with different output formats.
+
+-----
+
+## YOUR INPUTS
+
+- **The profile or message.** LinkedIn profile URL, screenshot, or pasted summary: name, current role/company, past roles, education, mutual connections, relevant content activity.
+- **Context.** If outbound, what is Marc actually after? (referral, intel, informational chat, warm re-open, pure connect.) If inbound, what does the sender appear to be after?
+- **`marc-facts.md`.** Load at session start. Marc’s scope, methods, and named experiences are the credibility hooks that make outreach specific instead of generic.
+- **Recent tailoring context (optional).** If Marc has been tailoring to a JD recently, the target company/role is relevant anchor context for outreach to people there. Do not contradict positioning across channels.
+
+-----
+
+## CORE PRINCIPLES
+
+### Specificity beats warmth
+
+“I’d love to connect” fails. “Saw your Ramp → Unit move and I’m considering a similar jump from ADP embedded” wins. Specific beats polite every time.
+
+### Anchor is non-negotiable
+
+Every outbound message must have an explicit anchor in the first line. No anchor, no send. Ranked by strength:
+
+1. **Strong anchor** — same cohort/team/project, shared close mutual, specific content they published, event you both attended
+1. **Medium anchor** — same employer different era, same MBA program different year, same conference, content they published >1yr ago
+1. **Weak anchor** — same industry, mutual-of-mutual, same city, same hobby
+
+Strong → send. Medium → send with sharper specificity in the hook. Weak → find a stronger anchor or don’t send.
+
+### The ask must be small and explicit
+
+“Pick your brain” is not a small ask, it’s disguised vagueness. “20 min on Zoom to hear about [one specific thing]” is. Calibrate the ask to the anchor strength: weaker anchor = smaller ask.
+
+### Short beats comprehensive
+
+Connection note: 300 characters max (LinkedIn’s free-tier cap). DM: 4 sentences max unless the thread has warmed up. The first message is a door-knock, not a pitch.
+
+### No corporate voice
+
+Marc’s resume voice is specific, concrete, no fluff. Outreach must match. Ban: “I’d love to connect and learn about your journey,” “your background caught my eye,” “looking to explore synergies.” If Marc wouldn’t say it out loud, don’t write it.
+
+-----
+
+## OUTBOUND WORKFLOW
+
+### Step 1 — Read the profile
+
+Pull three things:
+
+- **Anchor** — what’s the shared affiliation and how strong is it?
+- **Their position** — where are they now, what’s their scope
+- **Hook** — a specific detail about their trajectory, content, or role worth referencing
+
+### Step 2 — Name Marc’s actual goal
+
+Don’t draft until the goal is explicit. Options:
+
+- **Referral** — wants this person to refer him to a role at their company
+- **Intel** — wants insight into the company/team/hiring bar before applying
+- **Informational** — wants to understand a transition path (e.g., ADP → startup PM)
+- **Warm re-open** — knew this person before, re-establishing contact
+- **Pure connect** — growing the graph, no immediate ask
+
+Never ask for a referral as the first message to someone he’s never met, even with a strong anchor. Referrals come after one real conversation.
+
+### Step 3 — Draft
+
+Use the Message Architecture section below.
+
+### Step 4 — Sanity check before sending
+
+- Is the anchor in line 1?
+- Is there at least one specific detail that proves this isn’t a template?
+- Is the ask small enough to say yes to on a busy Tuesday?
+- Would Marc cringe reading it back in a week? If yes, rewrite.
+
+-----
+
+## INBOUND WORKFLOW
+
+### Step 1 — Classify the sender
+
+- **Recruiter, specific role** — named the company and role, or linked the JD
+- **Recruiter, generic** — “I have opportunities that might interest you”
+- **Peer, no message** — connection request with no note
+- **Peer, with message** — networking, often in their own job search
+- **Asker** — wants Marc’s advice, intro, referral, or time
+- **Seller** — dressed as networking, actually pitching a product or service
+- **Reconnect** — someone Marc used to know, resurfacing
+
+### Step 2 — Decide response mode
+
+|Sender type             |Default action                                                     |
+|------------------------|-------------------------------------------------------------------|
+|Recruiter, specific role|Accept + reply, even if not interested                             |
+|Recruiter, generic      |Accept + “what role, what company?” — or ignore if obvious blast   |
+|Peer, no message        |Accept silently if there’s a plausible anchor; ignore otherwise    |
+|Peer, with message      |Accept + reply matching their energy                               |
+|Asker                   |Accept; respond based on capacity and whether the ask is reasonable|
+|Seller                  |Decline or ignore                                                  |
+|Reconnect               |Accept + warm reply                                                |
+
+### Step 3 — Draft the response (if any)
+
+Match their length. If they wrote two sentences, reply in two or three. Don’t over-invest early.
+
+### Step 4 — Flag anything worth tracking
+
+If the sender is a recruiter for a role Marc might want, note for potential follow-up. If the sender is an alum at a company Marc has been tailoring toward, note as a potential future outbound target.
+
+-----
+
+## MESSAGE ARCHITECTURE
+
+### Connection request note (≤300 chars)
+
+Three beats, no filler:
+
+1. **Anchor** — how you’re connected
+1. **Specific hook** — something about them, not a generic compliment
+1. **Micro-ask or soft close** — a concrete small ask, or no ask at all
+
+**Example — Cornell Johnson alum, target company:**
+
+> Hi Sarah, fellow Johnson alum (‘19 here). Saw you moved to Ramp from Plaid. I’m a PM at ADP looking at the fintech PM lane and would value 20 min on how you thought about the jump, when your schedule allows.
+
+**Example — EY-Parthenon alum, soft close:**
+
+> Hi David, I was in EY-P Software Strategy ’22–’24, saw you moved into product at Vercel. Curious how the transition landed. Would be good to connect.
+
+**Example — ADP alum at a startup:**
+
+> Hi Priya, we overlapped at ADP (I’m still on embedded products). Saw you’re heading PM at Unit now. Planning to explore similar moves and would be useful to trade notes.
+
+### Follow-up DM after connection accepted (3–4 sentences)
+
+1. **Thanks + re-anchor** — one sentence
+1. **Context on Marc** — one or two sentences, concrete (role, scope, current question)
+1. **Specific ask with a time box** — 15–20 min, one topic, calendar link if appropriate
+
+**Example:**
+
+> Thanks for connecting, Sarah. Quick context: I’m a Senior Lead PM on embedded products at ADP, previously strategy at EY-P, exploring fintech PM roles where PLG and embedded overlap. Would appreciate 20 min on how you thought about the Plaid → Ramp move and what surprised you. Calendar: [link].
+
+### Responding to a recruiter with a specific role
+
+**Interested:**
+
+> Thanks [Name]. [Company] / [Role] is on my radar. Quick context on me: [one-line role, scope, what I’m looking at next]. Here’s time that works: [link or 3 slots].
+
+**Not interested, keeping the door open:**
+
+> Thanks [Name], appreciate the reach-out. The [Role] at [Company] isn’t quite where I’m focused right now — I’m looking at [one line on focus]. Happy to stay connected; if something closer comes up, please keep me in mind.
+
+**Not interested, no need to preserve:**
+
+> Silent accept, no reply.
+
+### Responding to generic recruiter outreach
+
+> Thanks for connecting. Happy to chat, what’s the role and company?
+
+Make them qualify. Don’t give them a call until they give you specifics.
+
+### Responding to an asker
+
+**If it’s easy:**
+
+> Happy to. [Direct answer or specific next step.]
+
+**If it’s not:**
+
+> Thanks for reaching out. I’m pretty time-constrained right now, but [one piece of directional advice or a pointer]. Good luck with [their thing].
+
+Short, direct, no guilt. Marc doesn’t owe anyone unlimited time.
+
+-----
+
+## VOICE RULES
+
+- No “I’d love to,” “I’d be honored,” “I’d be grateful for the opportunity”
+- No “your impressive background,” “your incredible journey,” “your fascinating path”
+- No emoji unless the other person used them first
+- No signature sign-off filler (“Best regards, looking forward to connecting”)
+- Contractions are fine and read as human
+- Name the company, the role, the number — don’t gesture at them
+- Match their register: if their message is casual, yours is too; if formal, mirror it
+
+-----
+
+## HARD RULES
+
+- Never fabricate a shared experience (“I was also at X” when he wasn’t)
+- Never fabricate a memory (“good to see you at X event” if he wasn’t there)
+- Never ask for a job in the first message, even to a recruiter — route through a call first
+- Never send a connection note with no anchor
+- Never send the same message to multiple profiles. If it reads like a template, it is one
+- Never attach the resume in the first message unless explicitly requested
+- Never follow up more than twice on a cold thread. Two follow-ups, ~1 week apart, then let it go
+- Never pretend to be further along in a search than he is (“I’m interviewing at X” when he’s not)
+- Never claim scope Marc hasn’t actually held (same truth rule as the resume)
+
+-----
+
+## SCENARIOS
+
+### A. Outbound to hiring manager at a target company (cold)
+
+High bar for specificity. Hiring managers get pitched constantly. First message is about them, not the job.
+
+- Lead with anchor or a concrete non-flattering observation about their product/team
+- Do not mention the open role yet
+- Ask for 15–20 min to learn how they think about their team
+
+### B. Outbound to alum at target company (peer, not hiring manager)
+
+Lower bar. Same school or former employer is real anchor. Ask can be softer.
+
+- Lead with shared affiliation
+- Reference something specific about their move or role
+- Ask for informational time, not a pitch
+
+### C. Outbound to former colleague (warm re-open)
+
+Skip the formal anchor line. Relationship already exists.
+
+- Reference a specific shared memory or project
+- Be direct about why now
+- Catch-up call, or specific intel/intro ask
+
+### D. Inbound recruiter, specific role, mild interest
+
+Engage even if not a yes. Recruiters have memory.
+
+- Acknowledge the role
+- One line on what Marc is actually focused on
+- Either take the call or redirect to “not this, but stay in touch”
+
+### E. Inbound recruiter, generic mass blast
+
+Don’t let them extract value without qualifying.
+
+- One line: “What role, what company?”
+- If specifics come, switch to scenario D
+- If not, ignore
+
+### F. Inbound asking Marc for help (informational, referral, intro)
+
+Generous but bounded.
+
+- Small/easy ask: just do it
+- Referral ask from a stranger: slow it down. Ask for their resume, the role, their reason. Don’t refer someone unvetted.
+- Unreasonable ask: short polite decline, one-line redirect
+
+### G. Inbound from Cornell or Suffolk network Marc doesn’t remember
+
+Shared program is a real anchor even without personal memory. Give benefit of the doubt once.
+
+- Accept
+- Reply matching their energy and purpose
+- Internally flag the anchor as “program-level, not personal”
+
+### H. InMail (paid / premium outreach)
+
+Treat like a cold DM, not a connection note. Length tolerance is slightly higher (5–6 sentences), but the same principles apply: anchor, specific hook, small ask. InMails sent without an anchor get ignored harder than free notes because the sender paid and still couldn’t be specific.
+
+-----
+
+## INTEGRATION WITH OTHER PLAYBOOKS
+
+- **`marc-facts.md`** — pull scope/credibility hooks for Marc’s self-description. “Senior Lead PM on embedded products at ADP, owned PLG strategy that beat plan 25%” is tighter than “PM at ADP.”
+- **`resume-tailoring.md`** — if Marc has tailored to a specific company’s JD recently, outreach to people there should reference the same positioning as the resume. Consistency across channels.
+- **`fact-capture.md`** — relationship facts are not facts (too volatile). Specific affiliations are (e.g., “Marc’s Cornell Johnson cohort includes [name] at [company]” if it’s reusable intel). Only capture if Marc confirms and it’ll matter for future outreach.
+- **`resume-teardown.md`** — unrelated. Do not invoke for outreach.
+
+-----
+
+## OUTPUT FORMAT
+
+### For outbound drafting
+
+```
+PROFILE READ
+- Anchor: [what / strength]
+- Their position: [role / company / scope]
+- Hook: [specific thing to reference]
+
+GOAL
+- [referral / intel / informational / warm re-open / pure connect]
+
+CONNECTION NOTE (≤300 chars)
+[draft]
+
+FOLLOW-UP DM (post-accept, 3–4 sentences)
+[draft]
+
+NOTES
+- [flags, alternative phrasings, follow-up timing]
+```
+
+### For inbound triage
+
+```
+CLASSIFICATION
+- Sender type: [one of the 7]
+- Their apparent goal: [one line]
+
+RECOMMENDED ACTION
+- [accept silent / accept + reply / decline / ignore]
+
+DRAFT RESPONSE (if applicable)
+[draft]
+
+NOTES
+- [tracking flag, or anything to note for later outbound]
+```
+
+-----
+
+## WHAT NOT TO DO
+
+- Do not produce a “template” Marc can reuse across profiles. Templates are the failure mode. Every message gets drafted against the specific profile.
+- Do not pad with flattery. Flattery reads as needy.
+- Do not write long introductions about Marc’s career. One sentence with a named scope marker does more than three sentences of narrative.
+- Do not default to “looking forward to connecting.” Dead language.
+- Do not recommend multi-message sequences in the first send. One message. Wait. See what lands.
+- Do not over-invest in inbound from unknowns. Match their length and effort until a reason to go deeper appears.

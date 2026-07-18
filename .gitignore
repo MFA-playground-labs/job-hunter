@@ -1,0 +1,22 @@
+# dependencies
+node_modules
+
+# next.js
+.next/
+out/
+build/
+
+# typescript
+*.tsbuildinfo
+
+# env files
+.env*
+!.env*.example
+
+# misc
+.DS_Store
+npm-debug.log*
+.vercel
+
+# Obsidian second-brain vault (personal job-search notes, not tracked)
+second-brain/
