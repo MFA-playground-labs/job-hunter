@@ -46,3 +46,11 @@ export function requireCronSecret(request: Request): NextResponse | null {
   }
   return null;
 }
+
+export async function requireUserOrCron(request: Request) {
+  const cronError = requireCronSecret(request);
+  if (!cronError) return { error: null, supabase: null, user: null, cron: true } as const;
+  const userResult = await requireUser();
+  if (!userResult.error) return { ...userResult, cron: false } as const;
+  return { error: cronError, supabase: null, user: null, cron: false } as const;
+}

@@ -1,0 +1,5 @@
+"use server";
+import { refresh, text, userSupabase } from "@/lib/actions";
+import type { AtsType, CompanyTier } from "@/types/database";
+export async function saveCompany(formData: FormData) { const supabase = await userSupabase(); const id = text(formData, "id"); const row = { name: text(formData, "name"), ats_type: (text(formData, "ats_type") || null) as AtsType | null, ats_slug: text(formData, "ats_slug") || null, tier: (text(formData, "tier") || "watch") as CompanyTier, notes: text(formData, "notes") || null }; if (!row.name) throw new Error("Company name is required"); const result = id ? await supabase.from("companies").update(row).eq("id", id) : await supabase.from("companies").insert(row); if (result.error) throw new Error(result.error.message); refresh("/companies"); }
+export async function setCompanyTier(formData: FormData) { const supabase = await userSupabase(); const result = await supabase.from("companies").update({ tier: text(formData, "tier") as CompanyTier }).eq("id", text(formData, "id")); if (result.error) throw new Error(result.error.message); refresh("/companies"); }

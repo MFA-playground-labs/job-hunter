@@ -1,8 +1,8 @@
-# Reference docs
+# CareerOS input files
 
-This folder is where the reference docs from the Phase 1 kickoff prompt belong. As of the initial
-build, none of these have been provided yet — drop them in here (file name doesn't have to match
-exactly, but these are the expected ones):
+Add Marc's source material here. `marc-facts.md` is imported by the Fact Import action; verified
+markers such as `[verified: 2026-07-18]` are retained. Add the master resume in Markdown or paste
+it into the Resumes screen.
 
 - `job-search-command-center-proposal.md` — full product plan (all phases; only Phase 1 is being built now)
 - `marc-facts.md` — fact corpus for the `facts` table (facts-migrator subagent). Nothing has been

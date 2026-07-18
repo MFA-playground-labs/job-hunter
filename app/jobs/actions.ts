@@ -1,0 +1,5 @@
+"use server";
+import { refresh, text, userSupabase } from "@/lib/actions";
+import type { JobStatus, PassReason } from "@/types/database";
+export async function updateJob(formData: FormData) { const supabase = await userSupabase(); const status = text(formData, "status") as JobStatus; const update = status === "passed" ? { status, pass_reason: text(formData, "pass_reason") as PassReason, pass_note: text(formData, "pass_note") || null } : { status }; const result = await supabase.from("jobs").update(update).eq("id", text(formData, "id")); if (result.error) throw new Error(result.error.message); refresh("/jobs"); refresh(`/jobs/${text(formData, "id")}`); }
+export async function createOutreachFromCompany(formData: FormData) { const supabase = await userSupabase(); const result = await supabase.from("outreach").insert({ company_id: text(formData, "company_id"), contact: "Hiring team", status: "suggested", notes: "Target company, no open PM roles." }); if (result.error) throw new Error(result.error.message); refresh("/outreach"); }
