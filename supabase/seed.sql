@@ -10,6 +10,14 @@ begin
     (dev_owner_id, 'Vercel', 'greenhouse', 'vercel', 'watch', 'seed'),
     (dev_owner_id, 'Notion', 'greenhouse', 'notion', 'watch', 'seed'),
     (dev_owner_id, 'Retool', 'greenhouse', 'retool', 'watch', 'seed'),
-    (dev_owner_id, 'Mercury', 'greenhouse', 'mercury', 'watch', 'seed')
+    (dev_owner_id, 'Mercury', 'greenhouse', 'mercury', 'watch', 'seed'),
+    (dev_owner_id, 'Decagon', 'ashby', 'decagon', 'watch', 'seed'),
+    (dev_owner_id, 'Harvey', 'ashby', 'harvey', 'watch', 'seed'),
+    (dev_owner_id, 'Scale AI', 'greenhouse', 'scaleai', 'watch', 'seed'),
+    (dev_owner_id, 'Perplexity', 'greenhouse', 'perplexityai', 'watch', 'seed'),
+    (dev_owner_id, 'Glean', 'greenhouse', 'glean', 'watch', 'seed'),
+    (dev_owner_id, 'Anysphere', 'ashby', 'anysphere', 'watch', 'seed'),
+    (dev_owner_id, 'Linear', 'ashby', 'linear', 'watch', 'seed'),
+    (dev_owner_id, 'Brex', 'greenhouse', 'brex', 'watch', 'seed')
   on conflict (owner_id, lower(name)) do nothing;
 end $$;
