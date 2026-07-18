@@ -5,6 +5,10 @@
       "schedule": "0 12 * * *"
     },
     {
+      "path": "/api/cron/scan-jobs",
+      "schedule": "0 22 * * *"
+    },
+    {
       "path": "/api/cron/scan-funding",
       "schedule": "0 13 * * 1"
     }

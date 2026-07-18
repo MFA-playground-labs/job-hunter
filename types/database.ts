@@ -223,6 +223,9 @@ export interface Database {
           base_floor: number | null;
           brand_weight: number;
           exit_weight: number;
+          excluded_domains: string[];
+          location_policy: "remote_only" | "remote_preferred" | "nyc_or_remote" | "flexible";
+          comp_structure_note: string | null;
           created_at: string;
         };
         Insert: {
@@ -233,6 +236,9 @@ export interface Database {
           base_floor?: number | null;
           brand_weight?: number;
           exit_weight?: number;
+          excluded_domains?: string[];
+          location_policy?: "remote_only" | "remote_preferred" | "nyc_or_remote" | "flexible";
+          comp_structure_note?: string | null;
           created_at?: string;
         };
         Update: {
@@ -243,6 +249,9 @@ export interface Database {
           base_floor?: number | null;
           brand_weight?: number;
           exit_weight?: number;
+          excluded_domains?: string[];
+          location_policy?: "remote_only" | "remote_preferred" | "nyc_or_remote" | "flexible";
+          comp_structure_note?: string | null;
           created_at?: string;
         };
         Relationships: [];

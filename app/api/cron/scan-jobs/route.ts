@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { fetchAtsBoard } from "@/lib/ats";
 import { dedupePostingsByUrl, isRelevantTitle } from "@/lib/ats/filter";
+import { isExcludedByDealbreaker } from "@/lib/ats/dealbreaker";
 import { requireUserOrCron } from "@/lib/api";
 import { appendSessionCosts, createSession } from "@/lib/llm";
 import { scoreJob } from "@/lib/scoring";
@@ -30,7 +31,7 @@ async function scan(request: Request) {
     const result = await fetchAtsBoard(company.ats_type!, company.ats_slug!);
     await supabase.from("companies").update({ ats_last_status: result.status === "error" ? `error: ${result.message}` : result.status }).eq("id", company.id);
     if (result.status !== "ok") continue;
-    const relevant = dedupePostingsByUrl(result.postings.filter((posting) => isRelevantTitle(posting.title)));
+    const relevant = dedupePostingsByUrl(result.postings.filter((posting) => isRelevantTitle(posting.title) && !isExcludedByDealbreaker(posting.jd_text, calibration.data.excluded_domains)));
     if (!relevant.length) zeroOpenings.push(company.id);
     for (const posting of relevant) {
       const insert = await supabase.from("jobs").upsert({ company_id: company.id, title: posting.title, url: posting.url, location: posting.location, jd_text: posting.jd_text, source: posting.source, scanned_at: new Date().toISOString(), status: "new", ...(auth.cron ? { owner_id: company.owner_id } : {}) }, { onConflict: "owner_id,url", ignoreDuplicates: true }).select("id").maybeSingle();

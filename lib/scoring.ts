@@ -25,7 +25,7 @@ export async function scoreJob(supabase: SupabaseClient<Database>, job: ScoreInp
   const rubric = playbook.data?.body ?? "Score each dimension from 0 to 100 based only on the posting and verified facts. Explain uncertainty; never invent experience or compensation.";
   const result = await runLLM({
     task: "job_scoring",
-    system: `${rubric}\n\nCalibration dials: ${JSON.stringify({ total_comp_floor: calibration.total_comp_floor, base_floor: calibration.base_floor, brand_weight: calibration.brand_weight, exit_weight: calibration.exit_weight })}\n\nVerified facts and gaps:\n${formatFactsBlock([...retrieved.facts, ...retrieved.gaps] as Fact[])}`,
+    system: `${rubric}\n\nCalibration dials: ${JSON.stringify({ total_comp_floor: calibration.total_comp_floor, base_floor: calibration.base_floor, brand_weight: calibration.brand_weight, exit_weight: calibration.exit_weight, location_policy: calibration.location_policy, comp_structure_note: calibration.comp_structure_note })}\n\nVerified facts and gaps:\n${formatFactsBlock([...retrieved.facts, ...retrieved.gaps] as Fact[])}`,
     messages: [{ role: "user", content: `Score this posting on a 0-100 scale.\nCompany: ${job.company}\nTitle: ${job.title}\nLocation: ${job.location ?? "Unknown"}\nDescription:\n${job.jd_text ?? "No description supplied"}` }],
     jsonSchema: SCORE_SCHEMA,
   });

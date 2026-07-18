@@ -8,6 +8,8 @@ import { computeCostUsd } from "@/lib/llm";
 import { rankFactsByKeywords } from "@/lib/retrieval";
 import { parseFeed } from "@/lib/rss";
 import { isStaleScan } from "@/lib/staleness";
+import { freshnessTier } from "@/lib/freshness";
+import { isExcludedByDealbreaker } from "@/lib/ats/dealbreaker";
 
 describe("ATS parsers", () => {
   it("normalizes Greenhouse, Ashby, and Lever postings", () => {
@@ -28,6 +30,21 @@ describe("scanner rules", () => {
   it("marks scans older than fourteen days stale", () => {
     expect(isStaleScan("2026-01-01T00:00:00Z", new Date("2026-01-15T00:00:01Z"))).toBe(true);
     expect(isStaleScan("2026-01-01T00:00:00Z", new Date("2026-01-15T00:00:00Z"))).toBe(false);
+  });
+  it("tiers freshness at the 24h/72h/14d boundaries", () => {
+    const scanned = "2026-01-01T00:00:00Z";
+    expect(freshnessTier(scanned, new Date("2026-01-01T23:59:00Z"))).toBe("hot");
+    expect(freshnessTier(scanned, new Date("2026-01-02T00:01:00Z"))).toBe("warm");
+    expect(freshnessTier(scanned, new Date("2026-01-04T00:01:00Z"))).toBe("cooling");
+    expect(freshnessTier(scanned, new Date("2026-01-16T00:01:00Z"))).toBe("stale");
+    expect(freshnessTier(null)).toBe("stale");
+  });
+  it("gates dealbreaker domains without flagging unrelated text", () => {
+    expect(isExcludedByDealbreaker("Join our sportsbook and casino platform", ["gambling"])).toBe(true);
+    expect(isExcludedByDealbreaker("We build a defense contractor weapons system", ["defense"])).toBe(true);
+    expect(isExcludedByDealbreaker("A great self-defense mindset helps in sales", ["defense"])).toBe(false);
+    expect(isExcludedByDealbreaker("AI-native product management", ["gambling", "defense"])).toBe(false);
+    expect(isExcludedByDealbreaker("casino platform", [])).toBe(false);
   });
 });
 
