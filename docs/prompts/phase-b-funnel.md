@@ -19,13 +19,18 @@ select (select count(*) from jobs where status='new') as untriaged,
        (select count(*) from facts where status='verified') as facts,
        (select count(*) from resumes where master=true) as master;
 ```
+Re-check counts immediately before triage and before any bulk write — other sessions share this
+Supabase project and can change `jobs` between when you read this and when you act on it.
 If facts=0 or master=0 → stop, tell me to run `docs/prompts/phase-a-fuel.md`.
 
 ## Step 2 — [MARC] Triage
 
 If untriaged > 0: give me the ranked list (title, company, composite, one-line rationale, URL) and
-send me to `/jobs` to mark Interested / Pass **with pass reasons** on every row. Pass reasons are
-training data — push back if I skip them. Wait until I say triage is done.
+send me to `/jobs` to mark Interested / Pass **with pass reasons** on every row (`jobs.status`
+transitions to `'interested'` or `'passed'` — not `'pass'`). Pass reasons are training data — push
+back if I skip them. Note which postings came from newer custom-ATS sources (Amazon, Netflix,
+Oracle, etc.) since they may not be reflected in any previously-suggested first-pass order. Wait
+until I say triage is done.
 
 ## Step 3 — Re-score Interested jobs (facts now exist)
 
@@ -43,8 +48,9 @@ For each top Interested job, follow `.claude/skills/tailor-resume.md` exactly (v
 ## Step 5 — [MARC] Submit + log
 
 I submit each application at the real posting URL. After I confirm each one, create the
-`applications` row (job_id, resume_id, `applied_at=now()`) and set the job `status='applied'`.
-Never create an applications row before I confirm submission.
+`applications` row (job_id, resume_id, `applied_at=now()::date` — the column is `date`, not
+timestamp) and set the job `status='applied'`. Never create an applications row before I confirm
+submission.
 
 ## Exit criteria (verify and report)
 
