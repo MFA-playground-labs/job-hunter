@@ -20,3 +20,7 @@ npm-debug.log*
 
 # Obsidian second-brain vault (personal job-search notes, not tracked)
 second-brain/
+
+# Raw personal facts/resume source material, not tracked
+docs/Docs facts raw/
+docs/marc-facts.md
