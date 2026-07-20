@@ -13,9 +13,9 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 
 export type CompanyTier = "target_1" | "target_2" | "broad" | "watch";
 export type CompanySource = "manual" | "funding_scan" | "seed";
-export type AtsType = "greenhouse" | "ashby" | "lever";
+export type AtsType = "greenhouse" | "ashby" | "lever" | "workday" | "custom";
 
-export type JobSource = "greenhouse" | "ashby" | "lever" | "manual" | "funding_scan";
+export type JobSource = "greenhouse" | "ashby" | "lever" | "workday" | "custom" | "manual" | "funding_scan";
 export type JobStatus =
   | "new"
   | "interested"
@@ -98,6 +98,8 @@ export interface Database {
           ats_type: AtsType | null;
           tier: CompanyTier;
           source: CompanySource;
+          sector: string | null;
+          company_type: string | null;
           funding_stage: string | null;
           last_funding_at: string | null;
           funding_source_url: string | null;
@@ -115,6 +117,8 @@ export interface Database {
           ats_type?: AtsType | null;
           tier?: CompanyTier;
           source?: CompanySource;
+          sector?: string | null;
+          company_type?: string | null;
           funding_stage?: string | null;
           last_funding_at?: string | null;
           funding_source_url?: string | null;
@@ -132,6 +136,8 @@ export interface Database {
           ats_type?: AtsType | null;
           tier?: CompanyTier;
           source?: CompanySource;
+          sector?: string | null;
+          company_type?: string | null;
           funding_stage?: string | null;
           last_funding_at?: string | null;
           funding_source_url?: string | null;
