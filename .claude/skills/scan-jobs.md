@@ -34,18 +34,46 @@ role to fill the gap.
 
 1. **Load target companies.** Query:
    ```sql
-   select id, owner_id, name, ats_type, ats_slug, ats_last_status
+   select id, owner_id, name, ats_type, ats_slug, ats_last_status, notes
    from companies
    where ats_slug is not null and ats_type is not null;
    ```
-   via `mcp__supabase__execute_sql`.
+   via `mcp__supabase__execute_sql`. `ats_type` is `greenhouse` | `ashby` | `lever` | `workday` |
+   `custom` — not every big-tech/enterprise company runs a Greenhouse/Ashby/Lever board, so don't
+   filter the target list down to those three. Companies with `ats_type` null and
+   `ats_last_status` starting with `unsupported:` have no known public JSON endpoint yet (JS-rendered
+   or bot-protected career site) — skip them but don't drop them from `companies`; a future pass with
+   different tooling (e.g. a headless browser) may unlock them.
 
 2. **Fetch each board.** Reuse the exact endpoint shapes already implemented in
    `lib/ats/greenhouse.ts`, `lib/ats/ashby.ts`, `lib/ats/lever.ts` (don't reimplement parsing logic —
-   read those files if unsure of a field name):
+   read those files if unsure of a field name) for the three native ATS types:
    - Greenhouse: `GET https://boards-api.greenhouse.io/v1/boards/{slug}/jobs?content=true`
    - Ashby: `GET https://api.ashbyhq.com/posting-api/job-board/{slug}`
    - Lever: `GET https://api.lever.co/v0/postings/{slug}?mode=json`
+
+   For `ats_type = 'workday'` or `'custom'` companies, the specific endpoint isn't a fixed shape —
+   read `companies.notes` for the resolved endpoint recorded during recon (format: a one-line
+   description plus the literal request URL). Known-working patterns discovered so far, reusable
+   as-is for the tenants already recorded (Adobe, Salesforce, Workday-the-company on Workday;
+   Amazon, Netflix, Oracle as custom):
+   - **Workday** (`ats_type = 'workday'`, `ats_slug` = tenant): `POST
+     https://{tenant}.{dc}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs` with JSON body
+     `{"appliedFacets":{},"limit":20,"offset":N,"searchText":"product manager"}` (`limit` caps at 20;
+     paginate via `offset`; `{dc}` and `{site}` are tenant-specific and were resolved once during
+     recon — read them from `notes`, don't re-guess). To onboard a *new* Workday tenant, resolve
+     `{dc}`/`{site}` by web-searching `"<company> careers myworkdayjobs.com"` or probing common `wd1`
+     `wd5` `wd12` datacenters with common site names (`Careers`, `External_Career_Site`,
+     `ExternalCareerSite`) before giving up on a company as unsupported — a 422 means the tenant
+     exists but the site name/body is wrong, not that Workday isn't in use.
+   - **Amazon** (custom): `GET https://www.amazon.jobs/en/search.json?base_query={query}&offset=N&result_limit=100`.
+   - **Netflix** (custom, Eightfold-powered): `GET
+     https://explore.jobs.netflix.net/api/apply/v2/jobs?domain=netflix.com&query={query}&start=N&num=10`
+     (page size is capped at 10 regardless of `num`; paginate via `start`).
+   - **Oracle** (custom, Oracle Fusion Recruiting Cloud): `GET
+     https://eeho.fa.us2.oraclecloud.com/hcmRestApi/resources/latest/recruitingCEJobRequisitions
+     ?onlyData=true&expand=requisitionList.secondaryLocations
+     &finder=findReqs;siteNumber=CX_1,facetsList=LOCATIONS,limit=50,offset=N,keyword={query},sortBy=POSTING_DATES_DESC`.
 
    Fetch with `curl -s -o <tmpfile> -w "%{http_code}"` (via Bash) to avoid dumping huge JSON payloads
    into the transcript; read the tmpfile only for the fields needed. A 404 means "not_found"; other
@@ -59,7 +87,29 @@ role to fill the gap.
    marketing, project manager, program manager, product marketing). Dedupe by `url` within a board's
    results (same behavior as `dedupePostingsByUrl`).
 
-3a. **Gate on hard deal-breaker domains before scoring.** Pull `calibrations.excluded_domains` (e.g.
+3a. **Resolve ambiguous multi-location postings before applying the location filter — don't just
+   drop them.** Workday search results summarize multi-site postings as a bare count (`"3 Locations"`,
+   `"8 Locations"`) instead of listing them; a posting whose real location list includes NYC or Remote
+   would otherwise be silently excluded by the location filter. If a posting already passes the title
+   relevance check (step 3) and its `locationsText` matches `/^\d+ Locations$/`, resolve the real list
+   before deciding to drop it:
+   ```
+   GET https://{tenant}.{dc}.myworkdayjobs.com/wday/cxs/{tenant}/{site}{externalPath}
+   ```
+   (`externalPath` is the value from the search result, e.g. `/job/San-Jose/Product-Manager_R168808`;
+   append it directly to the tenant/site base — no extra `/job` segment). The response's
+   `jobPostingInfo.location` (primary) plus `jobPostingInfo.additionalLocations` (array) together give
+   the full location list — apply the same NYC-or-Remote check against all of them. This is a real
+   HTTP call per ambiguous posting (not free), so only do it for postings that already cleared the
+   title-relevance filter, not the full unfiltered result set. When a match is found this way, record
+   in the `rationale` that the location was resolved from an aggregated summary and list the full
+   location set, so Marc can see why a posting whose primary/first-listed location isn't NYC or Remote
+   still made the cut (e.g. `"San Jose, New York, San Francisco"` matched on `"New York"`). Treat a
+   `"Remote {State}"` tag (e.g. `"Remote California"`) as a location-restricted remote designation, not
+   unconditional remote — flag it explicitly rather than silently treating it as satisfying a
+   `remote_preferred`/`nyc_or_remote` policy for someone outside that state.
+
+3b. **Gate on hard deal-breaker domains before scoring.** Pull `calibrations.excluded_domains` (e.g.
    `{gambling,defense}`) for the calibration in use, and drop any posting whose `jd_text` matches
    those domains — same behavior as `lib/ats/dealbreaker.ts`'s `isExcludedByDealbreaker`. These
    postings never reach the scoring step at all; they're not inserted, not scored, not shown.
