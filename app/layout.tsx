@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+
 import "./globals.css";
 import { Nav } from "@/components/nav";
 import { Toaster } from "@/components/ui/sonner";
@@ -14,13 +15,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className="h-full antialiased"
-    >
-      <body className="min-h-full flex flex-col bg-muted/30">
-        <Nav />
-        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">{children}</main>
+    <html lang="en" className="h-full antialiased">
+      <body className="min-h-full bg-background text-foreground">
+        <div className="app-shell min-h-screen">
+          <Nav />
+          <main className="app-main min-h-screen px-4 py-6 sm:px-6 lg:px-8 lg:py-8">{children}</main>
+        </div>
         <Toaster />
       </body>
     </html>
