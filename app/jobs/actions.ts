@@ -24,6 +24,10 @@ export async function updateJob(_: JobActionState, formData: FormData): Promise<
 
   try {
     const supabase = await userSupabase();
+    const existing = await supabase.from("jobs").select("status").eq("id", id).single();
+    if (existing.error || !["new", "interested"].includes(existing.data.status)) {
+      return FAILURE("This job has already moved into the pipeline and cannot be triaged here.");
+    }
     const update = status === "passed"
       ? { status: "passed" as const, pass_reason: passReason as PassReason, pass_note: passNote || null }
       : { status: "interested" as const };

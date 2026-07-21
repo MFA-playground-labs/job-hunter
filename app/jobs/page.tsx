@@ -126,21 +126,21 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
 
       <form className="grid gap-3 border-b pb-5 sm:grid-cols-2 lg:grid-cols-5" action="/jobs" method="get">
         <label className="grid gap-1 text-xs font-medium">Freshness
-          <select name="freshness" defaultValue={filters.freshness} className="h-9 rounded-md border bg-background px-2 text-sm"><option value="all">All freshness</option><option value="hot">Hot</option><option value="warm">Warm</option><option value="cooling">Cooling</option><option value="stale">Stale</option></select>
+          <select name="freshness" defaultValue={filters.freshness} className="h-11 rounded-md border bg-background px-2 text-sm"><option value="all">All freshness</option><option value="hot">Hot</option><option value="warm">Warm</option><option value="cooling">Cooling</option><option value="stale">Stale</option></select>
         </label>
         <label className="grid gap-1 text-xs font-medium">Minimum fit score
-          <select name="minScore" defaultValue={String(filters.minScore)} className="h-9 rounded-md border bg-background px-2 text-sm"><option value="0">Any score</option><option value="50">50+</option><option value="70">70+</option><option value="85">85+</option></select>
+          <select name="minScore" defaultValue={String(filters.minScore)} className="h-11 rounded-md border bg-background px-2 text-sm"><option value="0">Any score</option><option value="50">50+</option><option value="70">70+</option><option value="85">85+</option></select>
         </label>
         <label className="grid gap-1 text-xs font-medium">Company
-          <select name="company" defaultValue={filters.company} className="h-9 rounded-md border bg-background px-2 text-sm"><option value="">All companies</option>{companies.map((company) => <option key={company} value={company}>{company}</option>)}</select>
+          <select name="company" defaultValue={filters.company} className="h-11 rounded-md border bg-background px-2 text-sm"><option value="">All companies</option>{companies.map((company) => <option key={company} value={company}>{company}</option>)}</select>
         </label>
         <label className="grid gap-1 text-xs font-medium">Location
-          <select name="location" defaultValue={filters.location} className="h-9 rounded-md border bg-background px-2 text-sm"><option value="">All locations</option>{locations.map((location) => <option key={location} value={location}>{location}</option>)}</select>
+          <select name="location" defaultValue={filters.location} className="h-11 rounded-md border bg-background px-2 text-sm"><option value="">All locations</option>{locations.map((location) => <option key={location} value={location}>{location}</option>)}</select>
         </label>
         <label className="grid gap-1 text-xs font-medium">Status
-          <select name="status" defaultValue={filters.status} className="h-9 rounded-md border bg-background px-2 text-sm"><option value="all">All statuses</option><option value="new">New</option><option value="interested">Interested</option><option value="passed">Passed</option><option value="applied">Applied</option><option value="interviewing">Interviewing</option><option value="offer">Offer</option><option value="rejected">Rejected</option><option value="closed">Closed</option></select>
+          <select name="status" defaultValue={filters.status} className="h-11 rounded-md border bg-background px-2 text-sm"><option value="all">All statuses</option><option value="new">New</option><option value="interested">Interested</option><option value="passed">Passed</option><option value="applied">Applied</option><option value="interviewing">Interviewing</option><option value="offer">Offer</option><option value="rejected">Rejected</option><option value="closed">Closed</option></select>
         </label>
-        <div className="flex items-end gap-2 lg:col-span-5"><button className="h-9 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground hover:bg-primary/80" type="submit">Apply filters</button><Link href="/jobs" className="h-9 rounded-md px-3 py-2 text-sm hover:bg-muted">Clear</Link></div>
+        <div className="flex items-end gap-2 lg:col-span-5"><button className="h-11 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/80" type="submit">Apply filters</button><Link href="/jobs" className="h-11 rounded-md px-4 py-3 text-sm hover:bg-muted">Clear</Link></div>
       </form>
 
       {entries.length === 0 ? (
