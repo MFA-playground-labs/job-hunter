@@ -15,7 +15,7 @@ export type CompanyTier = "target_1" | "target_2" | "broad" | "watch";
 export type CompanySource = "manual" | "funding_scan" | "seed";
 export type AtsType = "greenhouse" | "ashby" | "lever" | "workday" | "custom";
 
-export type JobSource = "greenhouse" | "ashby" | "lever" | "workday" | "custom" | "manual" | "funding_scan";
+export type JobSource = "greenhouse" | "ashby" | "lever" | "workday" | "custom" | "manual" | "funding_scan" | "cowork";
 export type JobStatus =
   | "new"
   | "interested"
@@ -164,6 +164,10 @@ export interface Database {
           jd_text: string | null;
           jd_embedding: string | null;
           scanned_at: string | null;
+          posting_id: string | null;
+          content_hash: string | null;
+          first_seen_at: string | null;
+          last_seen_at: string | null;
           status: JobStatus;
           pass_reason: PassReason | null;
           pass_note: string | null;
@@ -184,6 +188,10 @@ export interface Database {
           jd_text?: string | null;
           jd_embedding?: string | null;
           scanned_at?: string | null;
+          posting_id?: string | null;
+          content_hash?: string | null;
+          first_seen_at?: string | null;
+          last_seen_at?: string | null;
           status?: JobStatus;
           pass_reason?: PassReason | null;
           pass_note?: string | null;
@@ -204,6 +212,10 @@ export interface Database {
           jd_text?: string | null;
           jd_embedding?: string | null;
           scanned_at?: string | null;
+          posting_id?: string | null;
+          content_hash?: string | null;
+          first_seen_at?: string | null;
+          last_seen_at?: string | null;
           status?: JobStatus;
           pass_reason?: PassReason | null;
           pass_note?: string | null;

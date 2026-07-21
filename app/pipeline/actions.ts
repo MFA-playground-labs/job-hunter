@@ -1,11 +1,9 @@
 "use server";
 import { refresh, text, userSupabase } from "@/lib/actions";
 import type { JobStatus } from "@/types/database";
-
-const NEXT: Partial<Record<JobStatus, JobStatus[]>> = { interested: ["applied", "closed"], applied: ["interviewing", "rejected", "closed"], interviewing: ["offer", "rejected", "closed"], offer: ["closed"] };
-export async function movePipelineJob(formData: FormData) {
-  const id=text(formData,"id"), target=text(formData,"status") as JobStatus; if(!id) throw new Error("Job id is required");
-  const supabase=await userSupabase(); const current=await supabase.from("jobs").select("status").eq("id",id).single(); if(current.error) throw new Error(current.error.message);
-  if(!(NEXT[current.data.status]??[]).includes(target)) throw new Error("That pipeline transition is not allowed");
-  const result=await supabase.from("jobs").update({status:target}).eq("id",id); if(result.error) throw new Error(result.error.message); refresh("/pipeline"); refresh("/dashboard"); refresh(`/jobs/${id}`);
+import { canMovePipeline } from "@/lib/workflow-transitions";
+export type PipelineActionState={ok:boolean;message:string};
+export async function movePipelineJob(_:PipelineActionState,formData:FormData):Promise<PipelineActionState>{
+  const id=text(formData,"id"),target=text(formData,"status") as JobStatus;if(!id)return{ok:false,message:"Job id is required."};
+  try{const supabase=await userSupabase();const current=await supabase.from("jobs").select("status").eq("id",id).single();if(current.error)return{ok:false,message:"This job could not be loaded."};if(!canMovePipeline(current.data.status,target))return{ok:false,message:"That pipeline transition is not allowed."};const result=await supabase.from("jobs").update({status:target}).eq("id",id).eq("status",current.data.status).select("id").maybeSingle();if(result.error)return{ok:false,message:"The status could not be saved."};if(!result.data)return{ok:false,message:"This job changed elsewhere. Refresh and try again."};refresh("/pipeline");refresh("/dashboard");refresh(`/jobs/${id}`);return{ok:true,message:`Moved to ${target}.`};}catch{return{ok:false,message:"The status could not be saved."};}
 }

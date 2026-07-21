@@ -1,5 +1,9 @@
 # CareerOS — Next Steps Checklist
 
+> **SUPERSEDED (2026-07-20) — historical only.** The fact-capture interview is no longer a
+> blocker: the resume seeds verified facts and deep facts are captured just-in-time at first
+> application. Follow [PRODUCT_ROADMAP.md](./PRODUCT_ROADMAP.md) (Phase P0 onward) instead.
+
 Running checklist of concrete actions, kept up to date as work progresses. Check items off as
 completed. See `docs/EXECUTION_PLAN.md` for the full phased plan this feeds into.
 

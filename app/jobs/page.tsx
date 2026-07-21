@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState, ErrorState } from "@/components/empty-state";
 import { SetupNeeded } from "@/components/setup-needed";
-import { hoursSinceScan } from "@/lib/freshness";
+import { freshnessTier, hoursSinceScan } from "@/lib/freshness";
 import {
   getJobsDigestGroup,
   latestScore,
@@ -101,7 +101,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
     const score = latestScore(job.job_scores ?? []);
     const company = job.companies?.name ?? "Unknown company";
     const group = getJobsDigestGroup(job.status, job.scanned_at);
-    return { job, score, company, group, tier: group === "passed" ? "stale" : group };
+    return { job, score, company, group, tier: freshnessTier(job.scanned_at) };
   }).filter((entry) => matchesJobFilters({
     company: entry.company,
     location: entry.job.location,
