@@ -43,12 +43,12 @@ export function JobActionControls({ jobId, currentStatus }: { jobId: string; cur
       <form action={interestAction}>
         <input name="id" type="hidden" value={jobId} />
         <input name="status" type="hidden" value="interested" />
-        <Button className="min-h-11" disabled={interestPending || interestState.ok || currentStatus === "interested"}>
+        <Button className="min-h-11" disabled={interestPending || passPending || interestState.ok || passState.ok || currentStatus === "interested"}>
           {interestPending ? "Saving…" : interestState.ok ? "Interested" : "Interested"}
         </Button>
       </form>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger render={<Button className="min-h-11" variant="outline" disabled={passPending} />}>
+        <DialogTrigger render={<Button className="min-h-11" variant="outline" disabled={interestPending || passPending || interestState.ok || passState.ok} />}>
           Pass
         </DialogTrigger>
         <DialogContent>
@@ -81,7 +81,7 @@ export function JobActionControls({ jobId, currentStatus }: { jobId: string; cur
             <ResultMessage state={passState} />
             <DialogFooter>
               <DialogClose render={<Button type="button" variant="outline" />} disabled={passPending}>Cancel</DialogClose>
-              <Button type="submit" variant="destructive" disabled={passPending}>{passPending ? "Passing…" : "Pass job"}</Button>
+              <Button type="submit" variant="destructive" disabled={interestPending || passPending || interestState.ok || passState.ok}>{passPending ? "Passing…" : "Pass job"}</Button>
             </DialogFooter>
           </form>
         </DialogContent>

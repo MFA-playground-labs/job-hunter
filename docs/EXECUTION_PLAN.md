@@ -1,5 +1,10 @@
 # CareerOS — Execution Plan (post-build)
 
+> **SUPERSEDED (2026-07-20) — historical only.** The canonical plan is now
+> [PRODUCT_ROADMAP.md](./PRODUCT_ROADMAP.md), revised for cowork/Obsidian job discovery,
+> resume-seeded facts with just-in-time deep-fact capture, and bounded self-learning.
+> This file is retained for context; do not execute its phasing.
+
 Phased roadmap from the 2026-07-20 CPO review. The app is built (Phases 1–2 of HANDOFF.md done,
 all 45 jobs scored); this plan is about **using** it to land a tier-1 role, plus the small builds
 that remove friction. Each phase lists who executes: **Marc** (only he can), a **skill** (invoke in

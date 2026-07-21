@@ -1,13 +1,13 @@
 import { ActionSubmit } from "@/components/action-submit";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SetupNeeded } from "@/components/setup-needed";
 import { EmptyState, ErrorState } from "@/components/empty-state";
 import { isSupabaseConfigured } from "@/lib/supabase/is-configured";
 import { createClient } from "@/lib/supabase/server";
 import { groupOutreach } from "@/lib/workflow-view";
-import { saveOutreach, updateOutreachStatus } from "./actions";
+import { saveOutreach } from "./actions";
+import { OutreachTouchForm } from "./outreach-touch-form";
 
 type Entry = { id: string; contact: string; company_id: string | null; channel: string | null; status: string; notes: string | null; last_touch: string | null; next_follow_up: string | null; companies: { name: string } | null };
 
@@ -15,7 +15,7 @@ function OutreachRow({ entry, overdue = false }: { entry: Entry; overdue?: boole
   return <article className="grid gap-4 rounded-xl border bg-background p-4 shadow-sm md:grid-cols-[1.3fr_1fr_auto] md:items-center">
     <div><div className="flex flex-wrap items-center gap-2"><h3 className="font-semibold">{entry.contact}</h3>{overdue && <Badge variant="destructive">Overdue</Badge>}</div><p className="text-sm text-muted-foreground">{entry.companies?.name ?? "No company"} · {entry.channel ?? "Channel not set"}</p>{entry.notes && <p className="mt-2 text-sm">{entry.notes}</p>}</div>
     <div className="text-sm"><p className="font-medium capitalize">{entry.status}</p><p className="text-muted-foreground">{entry.next_follow_up ? `Follow up ${new Date(`${entry.next_follow_up}T00:00:00`).toLocaleDateString()}` : "No follow-up scheduled"}</p></div>
-    <form action={updateOutreachStatus} className="flex flex-wrap gap-2"><input type="hidden" name="id" value={entry.id}/><input type="hidden" name="status" value="sent"/><Input className="h-11 w-36" name="next_follow_up" type="date" aria-label={`Reschedule follow-up with ${entry.contact}`}/><Button className="min-h-11" variant="outline" type="submit">Save touch</Button></form>
+    <OutreachTouchForm id={entry.id} contact={entry.contact} status={entry.status}/>
   </article>;
 }
 

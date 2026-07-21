@@ -1,0 +1,4 @@
+"use client";
+import { useActionState } from "react";import { Button } from "@/components/ui/button";import type{JobStatus}from"@/types/database";import{movePipelineJob,type PipelineActionState}from"./actions";
+const initial:PipelineActionState={ok:false,message:""};
+export function MoveJobForm({id,target}:{id:string;target:JobStatus}){const[state,action,pending]=useActionState(movePipelineJob,initial);return <form action={action} className="mt-3"><input type="hidden" name="id" value={id}/><input type="hidden" name="status" value={target}/><Button className="min-h-11 w-full" variant="outline" type="submit" disabled={pending||state.ok}>{pending?"Moving…":`Move to ${target}`}</Button>{state.message&&<p aria-live="polite" className={state.ok?"mt-2 text-xs text-emerald-700":"mt-2 text-xs text-destructive"}>{state.message}</p>}</form>}

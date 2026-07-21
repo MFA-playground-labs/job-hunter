@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "sync:obsidian": "tsx scripts/sync-obsidian.ts"
+    "sync:obsidian": "tsx scripts/sync-obsidian.ts",
+    "import:jobs": "tsx scripts/import-job-inbox.ts",
+    "seed:resume": "tsx scripts/seed-from-resume.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.112.3",

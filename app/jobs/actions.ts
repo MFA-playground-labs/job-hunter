@@ -2,6 +2,7 @@
 import { refresh, text, userSupabase } from "@/lib/actions";
 import { isPassReason, isSafeRecordId } from "@/lib/job-workflow";
 import type { PassReason } from "@/types/database";
+import { canTriageJob } from "@/lib/workflow-transitions";
 
 export type JobActionState = {
   ok: boolean;
@@ -25,16 +26,18 @@ export async function updateJob(_: JobActionState, formData: FormData): Promise<
   try {
     const supabase = await userSupabase();
     const existing = await supabase.from("jobs").select("status").eq("id", id).single();
-    if (existing.error || !["new", "interested"].includes(existing.data.status)) {
+    if (existing.error || !canTriageJob(existing.data.status)) {
       return FAILURE("This job has already moved into the pipeline and cannot be triaged here.");
     }
     const update = status === "passed"
       ? { status: "passed" as const, pass_reason: passReason as PassReason, pass_note: passNote || null }
       : { status: "interested" as const };
-    const result = await supabase.from("jobs").update(update).eq("id", id);
-    if (result.error) return FAILURE("We couldn't save that change. Please try again.");
+    const result = await supabase.from("jobs").update(update).eq("id", id).eq("status", existing.data.status).select("id").maybeSingle();
+    if (result.error || !result.data) return FAILURE("This job changed elsewhere. Refresh and try again.");
     refresh("/jobs");
     refresh(`/jobs/${id}`);
+    refresh("/pipeline");
+    refresh("/dashboard");
     return { ok: true, message: status === "passed" ? "Job passed." : "Marked as interested.", fieldErrors: {} };
   } catch {
     return FAILURE("We couldn't save that change. Please try again.");
